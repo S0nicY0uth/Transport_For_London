@@ -1,7 +1,7 @@
 describe Station do
     before do
         @charing_cross = Station.new('Charing Cross')
-        @victoria_line = Line.new("victoria") 
+        @victoria_line = Line.new("victoria")
     end
     describe "creating a station" do
         it 'should have a name attribute' do
@@ -27,7 +27,23 @@ describe Station do
             @victoria_line.add_station(@camden)
         end
         it "should return a list of stations between two points" do
-            #@charing_cross.route_to(@angel).must_equal([@charing_cross, @oval, @angel])
+            @charing_cross.route_to(@angel).must_equal([@charing_cross, @oval, @angel])
+        end
+
+        describe 'multiple lines' do
+          before do
+            @holborn = Station.new('Holborn')
+            @queensway = Station.new('Queensway')
+            @embankment = Station.new('Embankment')
+            @bakerloo = Line.new('Bakerloo')
+            @bakerloo.add_station(@holborn)
+            @bakerloo.add_station(@oval)
+            @bakerloo.add_station(@queensway)
+            @bakerloo.add_station(@embankment)
+          end
+          it "should return a route across multiple lines" do
+            @camden.route_to(@embankment).must_equal([@camden,@angel,@oval, @queensway,@embankment])
+          end
         end
     end
 

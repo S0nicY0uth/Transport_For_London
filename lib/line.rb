@@ -13,11 +13,11 @@ class Line
         station.add_line(self)
     end
 
-    def route (start_station, end_station)
+    def stations_between (start_station, end_station)
         start_index = @stations.index(start_station)
         end_index = @stations.index(end_station)
-        fn = (start_index < end_index ? :upto : :downto)
         output = []
+        fn = (start_index < end_index ? :upto : :downto)
         start_index.send(fn, end_index) do |index|
             output << @stations[index]
         end
